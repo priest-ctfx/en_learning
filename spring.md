@@ -18,6 +18,8 @@
 > ## integral
 > * 不可缺少的
 ----------
+> ## absolutely integral **to** the Spring Framework
+> * 绝对是Spring框架不可缺少的
 > ## foremost
 > * 最重要的
 > * 强调“最”，所以是单数
@@ -58,4 +60,5 @@
 > * 面向切面编程
 ----------
 # 1. The IoC Container
+
 ## 1.1. Introduction to the Spring IoC Container and Beans
