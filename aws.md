@@ -6,16 +6,16 @@
 > * AWS Firewall Manager
 ----------
 
-> ## 27 popule onlinw game. large number of users. Single AWS Region. S3 bucket stores game assets. DynamoDB stores plater scores. multi-Region solution reduse latency
+> ## 27 popular online game. large number of users. Single AWS Region. S3 bucket stores game assets. DynamoDB stores plater scores. multi-Region solution reduse latency
 > * Create another S3 bucket in new Region
 ----------
 
 > ## 28 establish a patching plan. must be securely
-> * User AWS Systems Manager on all instance to mange patching. etst patchs.
+> * User AWS Systems Manager on all instance to mange patching.Test patchs.
 ----------
 
-> ## 29 maching learing(ML) model by using 600 TB compressed data
-> * AWS Snow ball Edge Storage Optimized device
+> ## 29 machine learing(ML) model by using 600 TB compressed data
+> * AWS Snowball Edge Storage Optimized device
 ----------
 
 > ## 30 two separate business units. share documents with each other. S3 buckets have millions of objects. security audit identified that all documents must be stoered with encryption. wants to implement server-side S3 encryption keys(SSE-S3)
