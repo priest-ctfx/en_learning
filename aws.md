@@ -1,4 +1,4 @@
-> ## 1 company has serveral AWS accounts. implement a least privilege permissions policy allows Lambda functions tun in each of the AWS account
+> ## 1 serveral AWS accounts. implement least privilege permissions policy allows Lambda functions tun in each of the AWS account
 > * centralized account create IAM role has lambda service as trusted entity.
 > * other AWS account create IAM role has minimal permissions. Add centralized accounts Lamda IAM role as trusted entity.
 ----------
@@ -16,12 +16,12 @@
 ----------
 
 > ## 5 database between 500 GB and 800 GB
-> * Create EventBridge rule in the evening. Create second EventBridge rule runs in the morning. invoke another Lambda function that starts instance based on the tag.
+> * Create EventBridge rule in the evening. Create second EventBridge rule runs in the morning. invoke another Lambda function that starts (NOT restores!) instance based on the tag.
 ----------
 
-> ## 6 Multi-factior authentication (MFA) is required at login. keep traffic on a private network
+> ## 6（NG） Multi-factior authentication (MFA) is required at login. keep traffic on a private network
 > * Deploy a landing zone environment
-> * create transit gateways and transit getway VPC
+> * Create transit gateways and transit getway VPC
 > * AWS Single Sign-On
 ----------
 
@@ -33,12 +33,66 @@
 > * Amazon SQS queue
 ----------
 
-> ## 9 application written in NET and MYSQ>. 200,000 daily user.
+> ## 9（NG） application written in NET and MYSQL. 200,000 daily user.
 > * ALB front an EC2 Auto Scaling group
 ----------
 
-> ## 10 Aurora database credentials to the Lambda function. S3 is for server-side encryption. must not travel across the internet.
+> ## 10（NG） Aurora database credentials to the Lambda function. S3 is for server-side encryption. must not travel across the internet.
 > * Enable IAM db auth on Arora DB. Changed IAM role for Lambda funtcion. Deploy a gateway VPC endpoint for Amazon S3
+----------
+
+> ## 11 company does not access data that is more than 1 year old.
+> * AWS Glue Data Catalog. data more than 1 year old to S3 Glacier Deep Archive
+----------
+
+> ## 12 hundreds of AWS accounts. purchasing new Reserved Instatnces and modifying existing Reserved Instancees.
+> * Ensure all AWS account are part of organiztion. with all features enabled.
+> * SCP denies es2:PurchaseReservedInstancesOffering
+----------
+
+> ## 13 us-east-1 Region IPv4 CIDR block 10.10.0.0/16. us-east-2 Region IPv4 CIDR block 10.10.0.0/24. why error?
+> * IPv4 CIDR ranges of two VPCs overlap
+> * IAM row in peer accepter account does not have the correct permissions.
+----------
+
+> ## 14 large mobile gaming company migrate AWS. reviewing Cost Explorer notices that ... solution that develpers are lanching new Amazon EC2 instance as part of testing
+> * Create new IAM policy
+----------
+
+> ## 15 Java backend and NoSQL MongoDB to store subscriber data. need to migrate entire to AWS with similar stucture.
+> * Configure Amazon DocumentDB with multiple Zones. Deploy EC2 Auto Scaling group accross multiple Availability Zones
+> * (there is no on-demand !!!)
+----------
+
+> ## 16 company concerned that, if a production CloudFormation statck is deleted, EBS volumes might also be deleted.
+> * add DeletionPolicy
+----------
+
+> ## 17 MySQL heavy I/O operations
+> * Performing a one-time migration
+----------
+
+> ## 18 company is required to store the data for 120 days only, after which the data can be deleted.
+> * TTL
+----------
+
+> ## 19 application team has stored the database credentials as secrets n AWS Secrets Manager
+> * role that is named DBA-Secret
+----------
+
+> ## 20 static assets S3 bucket hosted in production account. Also uses development account disign team can access. after testing need to load assets into S3 bucket in the production account
+> * In the production account, create a new IAM policy that allows read and write access to S3 -> not development account
+> * In the production account, create a role. Attach new policy to the role. Define development acccount as trsted entity.  -> not development account
+> * In the Development account, create a group containes all IAM uses of design team. Attach different IAM policy to allow sts:AssumeRole action in Production account.
+----------
+
+> ## 21 PostgreSQL unable to scale due to heavy. already set up a VPN connection between network and AWS.
+> * use Amazon Kinesis Data Firehose to buffer evenths.
+> * Elasticsearch Service to recive evets.
+----------
+
+> ## 22 asynchronous HTTP application
+> * Lambda function and API Gateway. Route 53 to use a failover router policy
 ----------
 
 > ## 26 solution to manage AWS WAF rules across multiple AWS accounts, under different OUs
@@ -62,8 +116,7 @@
 ----------
 
 > ## 31 allow employees to work remotely from their homes. using VPN.
-> * Create Client VPN endpoint in main AWS account. Configure required routing.
-> * not each AWS account !
+> * Create Client VPN endpoint in main AWS account. Configure required routing. -> not each AWS account !
 ----------
 
 > ## 32 company developed APIs use API Gateway. After design review, indentifies a set of APIs that do not require public acccess. must design a solution to make set of APIs accessible only from a VPC.
@@ -75,35 +128,43 @@
 ----------
 
 > ## 34 data on phsical media. request will be low. Availability and speed  are not concerns.
-> * Create S3 bucket. Configure S3 bucket to use S3 Glacire Deep Archive storage as default.
+> * Create S3 bucket. Configure S3 bucket to use S3 Glacier Deep Archive storage as default.
+> * S3 Glacire Deep Archive 新型Amazon S3 存储类，长期保存一年内很少访问的数据
 ----------
 
 > ## 35 Single AWS Region. serverless application in a single AWS Region. use Amazon SNS topic to push URLs to Amazon SQS. changes produce multi-Region
 > * Deploy SQS with Lambda function to other Regions.
 > * Subscribe SQS qure in each Region to the SNS topic.
+> * SQS是消息队列服务。Lambda是一个事件驱动的平台，SQS加了Lambda function函数，就可以扔到Lambda跑了。
 ----------
 
 > ## 36 5,000 records set every 15 minutes in plaintext, over HTTPS
 > * create AWS Glue crawler   and custom class based on data feed formats
+> * Glue 爬网程序。当然要根据喂进来的数据格式自定义不同的class
 ----------
 
 > ## 37 Load for the application is variable, but minimum load and maximum load are known
-> * ECR ESC
-> * not ECR EKS...
+> * ECR ECS -> not ECR EKS
+> * ECR 管理docker注册表
+> * ECS 管理容器编排
+> * EKS 管理Kubernetes
 ----------
 
 > ## 38 Aurora MySQL separate AWS Region
 > * Aurora Replica in defferent Region
 ----------
 
-> ## 39 
-> * 
+> ## 39 share S3 bucket with strategy team can view the objects
+> * Set the principle
+> * grant decrypt permission to the stategy_reviewer IAM role -> not encrypt
 ----------
 
 > ## 40 multiple AWS accounts under same organization. requires the cost to be allocated to the owning project. Project tag. Prevent happening in the future?
 > * Create AWS Config rule to find missing tags
 > * Ceate SCP to deny action for ec2:Runlnstatance if Project tag is missiing -> not IAM policy
 > * Create AWS Config aggregator
+> * * SCP是一种组织策略，管理组织中的权限
+> * * IAM用于控制对资源的访问权限
 ----------
 
 > ## 41 company wants to change its internal cloud billing staegy for each business uinits, Use AWS Organizations to manage each business unit.
@@ -117,7 +178,7 @@
 ----------
 
 > ## 43 single 1 Gbps 
-> * Provisino Direct Connect gateway
+> * Provision Direct Connect gateway
 ----------
 
 > ## 44 vendor 12 hours to send new license files. uses configuration files with a static IP address
@@ -158,6 +219,117 @@
 > * User Lambda@Edge to use S3 bucket in us-east-1 -> NONONO TrasgrerAcceleration endpont
 ----------
 
-> ## 53 
+> ## 53 tocentrally-restrict access
+> * Review the Access Advisor in AWS IAM to determaine
+> * Remove default Fullansaccess SCP -> not Denyawsacess
+> * Define Organizatinal Units (OUS)
+----------
+
+> ## 54 2 TB
+> * Create an Amazon FSx for Windows File Server file system.
+----------
+
+> ## 55 electoronic document. web application communicates with Amazon API Gateway Regional endpoints. must impvoe latency outside of Europe
+> * Enable S3 Transfer Acceleration on S3 bucket.
+> * Change the API Gateway Regional endpoints
+----------
+
+> ## 56 must ensure users can regain access.
+> * using update-file-system command
+----------
+
+> ## 57 
+> * why not snow ball????
+----------
+
+> ## 58 
+> * Create a new customer-managed prefix list. Share the customer-managed prefix list
+----------
+
+> ## 59 HR departments is releasing a new system that will lanch in 3 monthes.
+> * AWS Billing and Cost managerment console, use the organization's management accoutn to trun off RI shareing for the HR department's prodction AWWS account.
+> * NOT use console to trun off RI sharing...
+----------
+
+> ## 60 remote plants
+> * Use AWS control Tower to create new OUs to add accounts for the * new plants *
+----------
+
+> ## 61 remote plants
+> * Define Route 53 outbound. Conifgure AWS Resourece Access manager (AWS RAM)
+----------
+
+> ## 62 
+> * Install the Amazon CloudWatch agent
+----------
+
+> ## 63 198.51.100.2 203.0 
+> * CouldWatch (not Clud Trail) console ... 198.51.100.2 ... 203.0 
+----------
+
+> ## 64 
+> * Deploy the security tool
+> * Provision a Gateway Load Balancer .... security tool
+----------
+
+> ## 65
+> * Aurora Replicas robin routing and sickly
+----------
+
+> ## 66 
+> * Configure AWS OpsWorks for Puppet Enterprise
+----------
+
+> ## 67
+> * Set the action of the web ACL rules to Count.
+----------
+
+> ## 68 给段儿代码
+> * kms:GenerateDataKey
+----------
+
+> ## 69 
+> * FTP server Amazon Simple Notification Service (Amazon SNS)
+----------
+
+> ## 81 一段代码
+> * 有一堆CRUD的操作选项
+> * 选择 Remove the FullAWSAccess SCP
+----------
+
+> ## 82
+> * my.service.com ... NLB DNS
+----------
+
+> ## 83
+> * associate the private hosted zone
+> * ... Delete association
+----------
+
+> ## 84
+> * uploaded vidieos in Amazon S3
+----------
+
+> ## 85
+> * root SCP to the Production
+----------
+
+> ## 86
+> * (AZs) to the VPC ... failover routing policy and health checks
+----------
+
+> ## 87
+> * Create an alias for every new deployed version
+----------
+
+> ## 88
+> * Secrets Manager RoutationSchedule (NOT other tools..), to rotate the database password every 90 days
+----------
+
+> ## 89
 > * 
+----------
+
+> ## 90
+> * Register a block in AWS account. Create Elastic IP Address
 ----------
