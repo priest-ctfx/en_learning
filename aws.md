@@ -333,3 +333,44 @@
 > ## 90
 > * Register a block in AWS account. Create Elastic IP Address
 ----------
+
+> ## 91
+> * 
+----------
+
+> ## 92
+> * Create an IAM role with AoazonSSMManaged InstanceCore
+----------
+
+> ## 93
+> * AWS DataSync to schedule a daily task
+----------
+
+> ## 94
+> * Enable resource shareing
+> * Create Resouce Access Manager.... Organizations OU ... Select each subnet(not prefix) to accociate
+----------
+
+> ## 95
+> * VmWare vSphere client
+----------
+
+> ## 96 pathing process
+> * Use System Manager to manage patehces
+----------
+
+> ## 97 
+> * 
+----------
+
+> ## 98 
+> * ...SFTP... Update sftp.example.com in Route 53
+----------
+
+> ## 99 
+> * !!!!
+----------
+
+> ## 100 
+> * Update IAM policy for the engineers with permissions to only allow AWS CloudFormation actions.
+----------
