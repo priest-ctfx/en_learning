@@ -1,14 +1,14 @@
 > ## 1 serveral AWS accounts. implement least privilege permissions policy allows Lambda functions tun in each of the AWS account
-> * centralized account create IAM role has lambda service as trusted entity.
-> * other AWS account create IAM role has minimal permissions. Add centralized accounts Lamda IAM role as trusted entity.
+> * centralized account create IAM role has lambda service (not other accounts) as trusted entity.
+> * other AWS account create IAM role has minimal permissions. Add centralized accounts Lamda IAM role (not lambda service) as trusted entity.
 ----------
 
 > ## 2 site using Application load Balancer(ALB). 24 hours and 8 hours
-> * Store the Docker imagesin ECR.
+> * Store the Docker images in ECR.
 ----------
 
 > ## 3 stateless ETL. application is scheduled to run every 4 hours and runs for up to 20 minutes.
-> * User AWS Fargate to run. User Amazon EventBridge to invoke Fagete task every 4 hours.
+> * Use AWS Fargate to run. User Amazon EventBridge to invoke Fagete task every 4 hours.
 ----------
 
 > ## 4 EC2 instance in an Auto Scaling group.
@@ -81,22 +81,34 @@
 ----------
 
 > ## 20 static assets S3 bucket hosted in production account. Also uses development account disign team can access. after testing need to load assets into S3 bucket in the production account
-> * In the production account, create a new IAM policy that allows read and write access to S3 -> not development account
-> * In the production account, create a role. Attach new policy to the role. Define development acccount as trsted entity.  -> not development account
-> * In the Development account, create a group containes all IAM uses of design team. Attach different IAM policy to allow sts:AssumeRole action in Production account.
+> * 2个In the production account选项都选
+> * In the Development account, 选有IAM的 并且 结尾有production
 ----------
 
 > ## 21 PostgreSQL unable to scale due to heavy. already set up a VPN connection between network and AWS.
-> * use Amazon Kinesis Data Firehose to buffer evenths.
-> * Elasticsearch Service to recive evets.
+> * use Amazon Kinesis Data Firehose to buffer events.
+> * Elasticsearch Service(Amazon ES) to recive events.
 ----------
 
-> ## 22 asynchronous HTTP application
+> ## 22(NG) asynchronous HTTP application
 > * Lambda function and API Gateway. Route 53 to use a failover router policy
 ----------
 
+> ## 23 
+> * aws:RequestedRegion
+> * ec2LInstanceType
+----------
+
+> ## 24 
+> * AWS Elastic Beanstalk
+----------
+
+> ## 25 
+> * AWS Schema Conversion Tool
+----------
+
 > ## 26 solution to manage AWS WAF rules across multiple AWS accounts, under different OUs
-> * AWS Firewall Manager
+> * AWS Firewall Manager to manage AWS WAF
 ----------
 
 > ## 27 popular online game. large number of users. Single AWS Region. S3 bucket stores game assets. DynamoDB stores plater scores. multi-Region solution reduse latency
@@ -109,10 +121,11 @@
 
 > ## 29 machine learing(ML) model by using 600 TB compressed data
 > * AWS Snowball Edge Storage Optimized device
+> * 看到BULK INSERT 不要选！！！
 ----------
 
 > ## 30 two separate business units. share documents with each other. S3 buckets have millions of objects. security audit identified that all documents must be stoered with encryption. wants to implement server-side S3 encryption keys(SSE-S3)
-> * Turn on SSE-S3 on both. User S3 Batch Operations to encrypt
+> * Turn on SSE-S3 on both. Use S3 Batch Operations to copy and encrypt
 ----------
 
 > ## 31 allow employees to work remotely from their homes. using VPN.
